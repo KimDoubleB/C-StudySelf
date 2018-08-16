@@ -80,8 +80,10 @@ private:
 	double rate;
 public:
 	NormalAccount(int id, char* name, int money, double rate)
-		: Account(id, name, money), rate(rate*0.01)
-	{}
+		: Account(id, name, money)
+	{
+		this->rate = rate * 0.01;
+	}
 
 	void setRate(double rate) { this->rate = rate; }
 	double getRate() const { return rate; }
@@ -90,13 +92,13 @@ public:
 
 };
 
-class HighCreditAccount : public Account
+class HighCreditAccount : public NormalAccount
 {
 private:
 	double rate, creditRate;
 public:
 	HighCreditAccount(int id, char* name, int money, double rate, int creditRate)
-		: Account(id, name, money), rate(rate*0.01)
+		: NormalAccount(id, name, money, rate)
 	{
 		switch (creditRate) {
 		case CREDIT_RATE::RATE_A:
@@ -110,9 +112,7 @@ public:
 			break;
 		}
 	}
-	void setRate(double rate) { this->rate = rate; }
 	void setCreditRate(int creditRate) { this->creditRate = creditRate; }
-	double getRate() const { return rate; }
 	double getCreditRate() const { return creditRate; }
 	void deposit(int money);
 	void printAccount() const;

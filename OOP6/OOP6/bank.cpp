@@ -92,6 +92,8 @@ void AccountHandler::deposit() {
 	cin >> de_money;
 
 	kBank[numAccount]->deposit(de_money);
+	cout << "입금완료" << endl;
+
 }
 
 void AccountHandler::withdraw() {
@@ -112,6 +114,8 @@ void AccountHandler::withdraw() {
 	cin >> wi_money;
 
 	kBank[numAccount]->withdraw(wi_money);
+	cout << "출금완료" << endl;
+
 }
 
 
@@ -140,8 +144,6 @@ AccountHandler::~AccountHandler() {
 
 void Account::deposit(int money) {
 	this->inMoney += money;
-	cout << "입금완료" << endl;
-
 }
 
 void Account::withdraw(int money) {
@@ -152,7 +154,6 @@ void Account::withdraw(int money) {
 	}
 
 	this->inMoney -= money;
-	cout << "출금완료" << endl;
 }
 
 void Account::printAccount() const {
@@ -163,8 +164,8 @@ void Account::printAccount() const {
 
 // Overriding
 void NormalAccount::deposit(int money) {
-	setMoney((int)(getMoney() * (1 + getRate()) + money));
-	cout << "입금완료" << endl;
+	Account::deposit(money); // 금액 입금
+	Account::deposit(money * getRate()); // 이자 추가
 }
 void NormalAccount::printAccount() const {
 	Account::printAccount();
@@ -173,11 +174,10 @@ void NormalAccount::printAccount() const {
 
 // Overriding
 void HighCreditAccount::deposit(int money) {
-	setMoney((int)(getMoney() * (1 + getRate() + getCreditRate()) + money));
-	cout << "입금완료" << endl;
+	NormalAccount::deposit(money); // 입금&이자 추가
+	Account::deposit(money * getCreditRate()); // 추가 이자 추가
 }
 void HighCreditAccount::printAccount() const {
-	Account::printAccount();
-	cout << "이자율: " << getRate() << endl;
+	NormalAccount::printAccount();
 	cout << "신용등급(1toA, 2toB, 3toC): " << getCreditRate() << endl;
 }
