@@ -1,5 +1,5 @@
-#ifndef __ACCOUNT_ARRAY__
-#define __ACCOUNT_ARRAY__
+#ifndef __ACCOUNT_ARRAY_H__
+#define __ACCOUNT_ARRAY_H__
 
 #include "Account.h"
 #include <cstdlib>
